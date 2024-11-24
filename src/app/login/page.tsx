@@ -1,7 +1,11 @@
-import { getIsMobile } from "@/utils/utils";
 import MobileLogin from "./mobile-login";
 import DesktopLogin from "./desktop-login";
+import { cookies } from "next/headers";
 
-export default function LoginPage() {
-  return getIsMobile() ? <MobileLogin /> : <DesktopLogin />;
+export default async function LoginPage() {
+  const cookieStore = await cookies();
+  const isMobile = cookieStore.get("isMobile")?.value === "true";
+
+  console.log("🎃 LoginPage - isMobile? ", isMobile);
+  return isMobile ? <MobileLogin /> : <DesktopLogin />;
 }
