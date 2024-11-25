@@ -2,6 +2,7 @@
 
 import { loginAction } from "@/actions/login.action";
 import { useToast } from "@/context/toast.context";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useActionState, useEffect, useState } from "react";
 
@@ -93,13 +94,16 @@ export default function LoginForm() {
           <div className="flex justify-between py-16 items-center">
             <p className="text-sm text-gray-600">
               아이디가 없으신가요?{" "}
-              <a href="#" className="text-dark font-bold hover:underline">
+              <Link
+                href="/signup"
+                className="text-dark font-bold hover:underline"
+              >
                 회원가입
-              </a>
+              </Link>
             </p>
             <button
               type="submit"
-              className="w-32 bg-primary text-white p-2 rounded-3xl hover:bg-purple-700 transition"
+              className="w-32 btn-primary"
               disabled={isPending}
             >
               로그인
