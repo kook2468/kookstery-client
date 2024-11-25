@@ -9,7 +9,7 @@ export function middleware(req: Request) {
   const response = NextResponse.next();
   response.cookies.set("isMobile", String(isMobile));
 
-  console.log("🎃 middleware - isMobile", isMobile);
+  console.log("🔮 middleware - isMobile", isMobile);
 
   return response;
 }

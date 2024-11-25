@@ -1,3 +1,9 @@
+import LoginForm from "@/components/login-form";
+
 export default function MobileLogin() {
-  return <div>mobile</div>;
+  return (
+    <div>
+      <LoginForm />
+    </div>
+  );
 }
