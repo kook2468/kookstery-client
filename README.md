@@ -1,5 +1,11 @@
 ## Kookstery 신비한 상점
 
+### 관련 url
+- figma : 
+- vercel(client) : 
+- vercel(server) :
+- supabase
+
 ### 로그인 페이지
 
 ![로그인 페이지](image.png)

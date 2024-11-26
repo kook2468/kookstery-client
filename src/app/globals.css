@@ -31,8 +31,12 @@ body {
   @apply bg-primary text-white p-2 rounded-3xl hover:bg-purple-700 transition;
 }
 
-.btn-secondary {
-  @apply bg-gray-500 hover:bg-gray-600;
+.btn-light {
+  @apply bg-white text-black p-2 rounded-3xl hover:bg-purple-700 hover:text-white transition border border-input;
+}
+
+.btn-dark {
+  @apply bg-[#333] text-white p-2 rounded-3xl hover:bg-purple-700 transition border border-input;
 }
 
 .rounded-left {
@@ -44,5 +48,14 @@ body {
 }
 
 abbr {
-  @apply inline-block w-2 h-2 bg-danger rounded-full;
+  @apply inline-block bg-danger rounded-full;
+  height: 5px;
+  width: 5px;
+  position: relative;
+  bottom: 3px;
+  left: 5px;
+}
+
+input[type="checkbox"] {
+  @apply flex items-center justify-center w-5 h-5 bg-white border border-gray-400 focus:text-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none appearance-none cursor-pointer checked:before:content-['✓'] checked:before:text-base checked:font-bold;
 }

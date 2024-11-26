@@ -1,26 +1,23 @@
-import { error } from "console";
-
-export async function loginAction(_: any, formData: FormData) {
+export async function signUpAction(_: any, formData: FormData) {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
+  const username = formData.get("username")?.toString();
 
-  if (!email || !password) {
+  if (!email || !password || !username) {
     return {
       status: false,
       error: "입력 정보를 확인해주세요.",
     };
   }
 
-  console.log(email, password);
+  console.log(email, password, username);
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_SERVER_URL}/auth/login`,
+      `${process.env.NEXT_PUBLIC_APP_SERVER_URL}/user/register`,
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-        credentials: "include",
+        body: JSON.stringify({ email, username, password }),
       }
     );
 
@@ -47,11 +44,10 @@ export async function loginAction(_: any, formData: FormData) {
       error: "",
     };
   } catch (err) {
-    console.log(err);
-    //console.error("💊 로그인 실패", err);
+    console.error("💊 회원가입 실패", err);
     return {
       status: false,
-      error: `로그인에 실패 - ${err}`,
+      error: `회원가입 실패 - ${err}`,
     };
   }
 }

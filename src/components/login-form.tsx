@@ -117,7 +117,7 @@ export default function LoginForm() {
               <span>Google 간편 로그인</span>
             </button>
             <button className="border border-2 border-[#AAA] border-opacity-20 px-6 py-2 rounded-3xl flex items-center space-x-2 text-sm">
-              <img src="/kakao-icon.png" alt="Kakao" className="w-6" />
+              <img src="/kakao-icon.webp" alt="Kakao" className="w-6" />
               <span>카카오톡 간편 로그인</span>
             </button>
           </div>
