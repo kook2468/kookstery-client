@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function DesktopLogin() {
   return (
-    <div className="min-h-screen flex justify-center items-center font-sans">
+    <div className="min-h-screen flex justify-center items-center">
       {/* Left Div */}
       <div className="flex-1 bg-light min-h-screen flex items-center rounded-left w-full">
         <div className="min-h-screen w-full flex flex-col md:flex-row">
