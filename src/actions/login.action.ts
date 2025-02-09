@@ -1,6 +1,4 @@
-import { error } from "console";
-
-export async function loginAction(_: any, formData: FormData) {
+export async function loginAction(_: unknown, formData: FormData) {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
 
@@ -51,7 +49,7 @@ export async function loginAction(_: any, formData: FormData) {
     //console.error("💊 로그인 실패", err);
     return {
       status: false,
-      error: `로그인에 실패 - ${err}`,
+      error: `로그인 실패 - ${err}`,
     };
   }
 }

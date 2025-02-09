@@ -1,8 +1,7 @@
 import { signUpAction } from "@/actions/sign-up.action";
 import FormInput from "@/components/form-input";
 import { useToast } from "@/context/toast.context";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
 import {
   FormEvent,
   startTransition,
@@ -24,9 +23,9 @@ export default function SignUpForm({ onSuccess }: { onSuccess: () => void }) {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [username, setUsername] = useState("");
-  const [phone, setPhone] = useState("");
+  //const [phone, setPhone] = useState("");
   const [errors, setErrors] = useState<Errors>({});
-  const router = useRouter();
+  //const router = useRouter();
   const { showToast } = useToast();
 
   const [state, formAction, isPending] = useActionState(signUpAction, null);
@@ -47,9 +46,9 @@ export default function SignUpForm({ onSuccess }: { onSuccess: () => void }) {
     setUsername(e.target.value);
   };
 
-  const onChangePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhone(e.target.value);
-  };
+  // const onChangePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPhone(e.target.value);
+  // };
 
   const [agreements, setAgreements] = useState({
     terms_of_service: false,

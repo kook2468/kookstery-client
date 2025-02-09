@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+//import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface ToastProps {
@@ -7,7 +7,7 @@ interface ToastProps {
 }
 
 export default function Toast({ message, type = "error" }: ToastProps) {
-  const [isVisible, setIsVisible] = useState(true);
+  //const [isVisible, setIsVisible] = useState(true);
   //const toastRef = useRef<HTMLElement>(null);
 
   //   useEffect(() => {
