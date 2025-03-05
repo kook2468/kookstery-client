@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getAllCategories } from "@/actions/categories.action";
 import { useEffect, useState } from "react";
 import { Category } from "@/types/category";
+import Link from "next/link";
 
 export default function Home() {
   /* 카테고리 조회 */
@@ -53,9 +54,10 @@ export default function Home() {
         <div className="flex flex-col md:flex-row justify-between gap-3 text-center">
           {categories &&
             categories.map((category) => (
-              <div
+              <Link
                 key={category.id}
                 className="bg-white flex-1 py-10 px-4 rounded-3xl hover:shadow-lg hover:cursor-pointer"
+                href={"/category/" + category.id}
               >
                 <Image
                   src="/emoji-magic-wand.svg"
@@ -67,7 +69,7 @@ export default function Home() {
                 <div className="tracking-tighter text-sm md:text-base">
                   {category.name}
                 </div>
-              </div>
+              </Link>
             ))}
         </div>
       </div>
