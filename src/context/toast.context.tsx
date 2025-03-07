@@ -4,7 +4,7 @@ import Toast from "@/components/toast";
 import React, { createContext, useContext, useState } from "react";
 
 interface ToastContextType {
-  showToast: (message: string, type?: string) => void;
+  showToast: (message: string | undefined, type?: string) => void;
   hideToast: () => void;
 }
 

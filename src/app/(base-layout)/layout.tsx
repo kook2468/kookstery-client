@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function RootLayout({
   children,
@@ -7,36 +8,38 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <header className="w-full fixed h-16 grid grid-flow-col grid-cols-[230px_1fr_230px] items-center px-16 border-b bg-white">
-        <div className="text-xl font-bold">Kookstery</div>
+      <header className="w-full fixed h-16 grid grid-flow-col grid-cols-[180px_1fr_180px] items-center px-16 border-b bg-white">
+        <Link href="/" className="text-xl font-bold">
+          Kookstery
+        </Link>
         <div className="flex gap-2">
           <Image src="/category.svg" width={22} height={22} alt="category" />
           카테고리
         </div>
         <div className="grid grid-flow-col gap-4">
-          <div>
+          <Link href="/mypage">
             <Image
               src="/mypage.svg"
-              width={22}
-              height={22}
+              width={20}
+              height={20}
               alt="mypage"
               className="m-auto"
             />
-          </div>
-          <div>
+          </Link>
+          <Link href="/cart">
             <Image
               src="/cart.svg"
-              width={22}
-              height={22}
+              width={20}
+              height={20}
               alt="cart"
               className="m-auto"
             />
-          </div>
+          </Link>
           <div>
             <Image
               src="/search.svg"
-              width={22}
-              height={22}
+              width={20}
+              height={20}
               alt="search"
               className="m-auto"
             />
