@@ -1,13 +1,11 @@
 import { CartItem } from "@/types/cartItem";
+import { Response } from "@/types/response";
 
+/* 카트아이템 생성 */
 export async function createCartItem(
   productId: number,
   quantity: number
-): Promise<{
-  status: boolean;
-  message?: string;
-  data?: CartItem;
-}> {
+): Promise<Response<CartItem>> {
   try {
     console.log("쿠키??", document.cookie);
 

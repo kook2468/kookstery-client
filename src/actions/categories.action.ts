@@ -1,11 +1,9 @@
 import { Category } from "@/types/category";
 import { Product } from "@/types/product";
+import { Response } from "@/types/response";
 
-export async function getAllCategories(): Promise<{
-  status: boolean;
-  message?: string;
-  data?: Category[];
-}> {
+/* 전체 카테고리 조회 */
+export async function getAllCategories(): Promise<Response<Category[]>> {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_SERVER_URL}/categories`
@@ -35,11 +33,10 @@ export async function getAllCategories(): Promise<{
   }
 }
 
-export async function getProductsByCategory(categoryId: string): Promise<{
-  status: boolean;
-  message?: string;
-  data?: Product[];
-}> {
+/* 카테고리별 전체 상품 조회 */
+export async function getProductsByCategory(
+  categoryId: string
+): Promise<Response<Product[]>> {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_SERVER_URL}/categories/${categoryId}/products`
@@ -69,11 +66,9 @@ export async function getProductsByCategory(categoryId: string): Promise<{
   }
 }
 
-export async function getCategoryById(categoryId: string): Promise<{
-  status: boolean;
-  message?: string;
-  data?: Category;
-}> {
+export async function getCategoryById(
+  categoryId: string
+): Promise<Response<Category>> {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_SERVER_URL}/categories/${categoryId}`

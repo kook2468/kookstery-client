@@ -1,6 +1,9 @@
 "use client";
 
-import { getAllCartItems } from "@/actions/cart-item.action";
+import {
+  getAllCartItems,
+  updateCartItemSelected,
+} from "@/actions/cart-item.action";
 import { CartItem } from "@/types/cartItem";
 import { useEffect, useState } from "react";
 
@@ -20,6 +23,25 @@ export default function Page() {
 
     fetchCartItems();
   }, []);
+
+  const handleCheckboxChange =
+    (id: number) => async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const isSelected = e.target.checked;
+      console.log(`Id: ${id}, Selected: ${isSelected}`);
+
+      setCartItems(
+        cartItems?.map((prev) =>
+          prev?.id === id ? { ...prev, isSelected: !prev.isSelected } : prev
+        )
+      );
+
+      try {
+        await updateCartItemSelected(id, isSelected);
+      } catch (error) {
+        console.error(`카트아이템 id=${id} 상태 업데이트 실패 - `, error);
+      }
+    };
+
   return (
     <div className="flex gap-20 pt-6">
       <div className="w-2/3">
@@ -32,7 +54,11 @@ export default function Page() {
               <div className="grid grid-flow-col grid-cols-[30px_1fr_2fr_100px] p-4 items-center min-h-48">
                 {/* checkbox */}
                 <div>
-                  <input type="checkbox"></input>
+                  <input
+                    type="checkbox"
+                    checked={cartItem?.isSelected}
+                    onChange={handleCheckboxChange(cartItem.id)}
+                  ></input>
                 </div>
                 {/* image */}
                 <div className="h-full h-10 bg-gray-300"></div>
@@ -42,14 +68,14 @@ export default function Page() {
                     {cartItem?.product?.category?.name}
                   </p>
                   <h3 className="font-medium">{cartItem.product.name}</h3>
-                  <p className="text-sm">99,999원/개</p>
+                  <p className="text-sm">{cartItem.product.finalPrice}원/개</p>
                   <div className="flex pt-4 gap-4">
-                    <div>수량</div>
+                    <div>{cartItem.quantity}개</div>
                     <div>삭제</div>
                   </div>
                 </div>
                 {/* total */}
-                <div className="text-right">99,9990원</div>
+                <div className="text-right">{cartItem.finalPrice}&nbsp;원</div>
               </div>
               <hr />
             </div>
@@ -63,12 +89,28 @@ export default function Page() {
         <div className="py-2">
           <div className="flex justify-between py-2">
             <h3>총 상품 금액</h3>
-            <p>99,999&nbsp;원</p>
+            <p>
+              {cartItems?.reduce(
+                (sum, cartItem) =>
+                  sum +
+                  (cartItem.isSelected ? Number(cartItem.regularPrice) : 0),
+                0
+              )}
+              &nbsp;원
+            </p>
           </div>
 
           <div className="flex justify-between py-2">
-            <h3>총 상품 금액</h3>
-            <p>99,999&nbsp;원</p>
+            <h3>할인 금액</h3>
+            <p>
+              {cartItems?.reduce(
+                (sum, cartItem) =>
+                  sum +
+                  (cartItem.isSelected ? Number(cartItem.discountPrice) : 0),
+                0
+              )}
+              &nbsp;원
+            </p>
           </div>
         </div>
 
@@ -77,7 +119,15 @@ export default function Page() {
         <div className="py-2">
           <div className="flex justify-between py-2">
             <h3>합계</h3>
-            <p>99,999&nbsp;원</p>
+            <p>
+              {" "}
+              {cartItems?.reduce(
+                (sum, cartItem) =>
+                  sum + (cartItem.isSelected ? Number(cartItem.finalPrice) : 0),
+                0
+              )}
+              &nbsp;원
+            </p>
           </div>
         </div>
 

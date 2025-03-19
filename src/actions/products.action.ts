@@ -1,10 +1,9 @@
 import { Product } from "@/types/product";
+import { Response } from "@/types/response";
 
-export async function getProduct(productId: string): Promise<{
-  status: boolean;
-  message?: string;
-  data?: Product;
-}> {
+export async function getProduct(
+  productId: string
+): Promise<Response<Product>> {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_SERVER_URL}/products/${productId}`
