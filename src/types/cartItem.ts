@@ -1,6 +1,7 @@
 import { Product } from "./product";
 
 export interface CartItem {
+  id: number;
   isSelected: boolean;
   quantity: number;
   note: string;

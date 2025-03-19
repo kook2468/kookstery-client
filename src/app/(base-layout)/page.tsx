@@ -56,7 +56,7 @@ export default function Home() {
             categories.map((category) => (
               <Link
                 key={category.id}
-                className="bg-white flex-1 py-10 px-4 rounded-3xl hover:shadow-lg hover:cursor-pointer"
+                className="bg-[white] flex-1 py-10 px-4 rounded-3xl border-light border-2 hover:shadow-lg hover:cursor-pointer"
                 href={"/category/" + category.id}
               >
                 <Image

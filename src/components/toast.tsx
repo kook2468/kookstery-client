@@ -20,7 +20,7 @@ export default function Toast({ message, type = "error" }: ToastProps) {
 
   return createPortal(
     <div
-      className={`z-10 fixed top-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg text-white ${
+      className={`z-50 fixed top-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg text-white ${
         type === "error" ? "bg-danger" : "bg-green-500"
       }`}
     >

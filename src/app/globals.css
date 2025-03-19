@@ -62,3 +62,7 @@ abbr {
 input[type="checkbox"] {
   @apply flex items-center justify-center w-5 h-5 bg-white border border-gray-400 focus:text-purple-500 focus:ring-purple-500 focus:ring-1 focus:outline-none appearance-none cursor-pointer checked:before:content-['✓'] checked:before:text-base checked:font-bold;
 }
+
+.line-main {
+  border-color: #000;
+}
