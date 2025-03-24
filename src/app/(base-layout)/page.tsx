@@ -5,13 +5,14 @@ import { getAllCategories } from "@/actions/categories.action";
 import { useEffect, useState } from "react";
 import { Category } from "@/types/category";
 import Link from "next/link";
+import { Product } from "@/types/product";
 
 export default function Home() {
   /* 카테고리 조회 */
   const [categories, setCategories] = useState<Category[] | undefined>([]);
+  const [lastViewedProducts, setLastViewedProducts] = useState<Product[]>();
 
   /* 인기상품 조회 */
-
   useEffect(() => {
     const fecthCategories = async () => {
       try {
@@ -25,7 +26,15 @@ export default function Home() {
     };
 
     fecthCategories();
+    getStorage();
   }, []);
+
+  const getStorage = () => {
+    const storageKey = "app_lastViewedProducts";
+    const stored = localStorage.getItem(storageKey);
+    const parsed: Product[] = stored ? JSON.parse(stored) : [];
+    setLastViewedProducts(parsed);
+  };
 
   return (
     <div className="mt-14">
@@ -76,12 +85,20 @@ export default function Home() {
 
       {/* 인기 상품 */}
       <div>
-        <h1 className="font-bold tracking-tight pb-4">인기상품</h1>
-        <div className="flex flex-col md:flex-row justify-between gap-4 text-center">
-          <div className="bg-[#ECF2F7] flex-1 rounded-3xl py-10 px-4 min-h-40"></div>
-          <div className="bg-[#ECF2F7] flex-1 rounded-3xl py-10 px-4 min-h-40"></div>
-          <div className="bg-[#ECF2F7] flex-1 rounded-3xl py-10 px-4 min-h-40"></div>
-          <div className="bg-[#ECF2F7] flex-1 rounded-3xl py-10 px-4 min-h-40"></div>
+        <h1 className="font-bold tracking-tight pb-4">최근 본 상품</h1>
+        <div className="overflow-x-auto hide-scrollbar">
+          <div className="flex flex-col md:flex-row gap-4 text-center min-w-max">
+            {lastViewedProducts && lastViewedProducts.length > 0 ? (
+              lastViewedProducts.map((product) => (
+                <div key={product.id} className="w-44 shrink-0">
+                  <div className="bg-[#ECF2F7] rounded-3xl py-10 px-4 min-h-40"></div>
+                  <h3 className="mt-2">{product.name}</h3>
+                </div>
+              ))
+            ) : (
+              <div>최근 본 상품이 없습니다.</div>
+            )}
+          </div>
         </div>
       </div>
     </div>

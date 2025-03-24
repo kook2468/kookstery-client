@@ -1,26 +1,35 @@
 "use client";
 
 import {
+  deleteCartItem,
   getAllCartItems,
+  updateCartItemQuantity,
   updateCartItemSelected,
 } from "@/actions/cart-item.action";
+import QuantityInput from "@/components/quantity-input";
+import { useToast } from "@/context/toast.context";
 import { CartItem } from "@/types/cartItem";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Page() {
+  const { showToast } = useToast();
   const [cartItems, setCartItems] = useState<CartItem[]>();
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const response = await getAllCartItems();
-        if (response?.status) {
-          setCartItems(response?.data);
-        }
-      } catch (error) {
-        console.error("전체 카트아이템 조회 실패 - ", error);
-      }
-    };
+  const router = useRouter();
 
+  const fetchCartItems = async () => {
+    try {
+      const response = await getAllCartItems();
+      if (response?.status) {
+        setCartItems(response?.data);
+      }
+    } catch (error) {
+      console.error("전체 카트아이템 조회 실패 - ", error);
+    }
+  };
+
+  useEffect(() => {
     fetchCartItems();
   }, []);
 
@@ -42,13 +51,40 @@ export default function Page() {
       }
     };
 
+  const handleQtyChange = async (id: number, newQty: number) => {
+    try {
+      console.log("여기newQty", newQty);
+      const response = await updateCartItemQuantity(id, newQty);
+      if (response?.status) {
+        fetchCartItems();
+      }
+    } catch (error) {
+      console.error(`카트아이템 수량 업데이트 실패 - `, error);
+    }
+  };
+
+  const handleDeleteClick = (id: number) => async () => {
+    try {
+      const response = await deleteCartItem(id);
+      if (response?.status) {
+        await fetchCartItems();
+        showToast("카트아이템을 삭제했습니다.", "success");
+      } else {
+        showToast("카트아이템 삭제 실패", "error");
+      }
+    } catch (error) {
+      console.error(`카트아이템 삭제 실패 - ${error}`);
+      showToast("카트아이템 삭제 실패", "error");
+    }
+  };
+
   return (
-    <div className="flex gap-20 pt-6">
-      <div className="w-2/3">
+    <div className="flex flex-col gap-20 pt-6 md:flex-row">
+      <div className="w-full md:w-2/3">
         <h1 className="text-xl font-medium p-2">장바구니</h1>
         <hr className="line-main" />
 
-        {cartItems &&
+        {cartItems && cartItems.length > 0 ? (
           cartItems.map((cartItem) => (
             <div key={cartItem?.id}>
               <div className="grid grid-flow-col grid-cols-[30px_1fr_2fr_100px] p-4 items-center min-h-48">
@@ -65,13 +101,31 @@ export default function Page() {
                 {/* detail */}
                 <div className="px-6">
                   <p className="text-[#ddd] text-sm">
-                    {cartItem?.product?.category?.name}
+                    <span>{cartItem?.product?.category?.name}</span>
                   </p>
-                  <h3 className="font-medium">{cartItem.product.name}</h3>
+                  <h3
+                    className="font-medium cursor-pointer hover:underline"
+                    onClick={() => {
+                      router.push(`/product/${cartItem?.product?.id}`);
+                    }}
+                  >
+                    {cartItem.product.name}
+                  </h3>
                   <p className="text-sm">{cartItem.product.finalPrice}원/개</p>
                   <div className="flex pt-4 gap-4">
-                    <div>{cartItem.quantity}개</div>
-                    <div>삭제</div>
+                    <QuantityInput
+                      id={cartItem.id}
+                      initQty={cartItem.quantity}
+                      onQtyChange={handleQtyChange}
+                    ></QuantityInput>
+                    <Image
+                      src="/trash.svg"
+                      width={22}
+                      height={22}
+                      alt="delete"
+                      className="cursor-pointer"
+                      onClick={handleDeleteClick(cartItem.id)}
+                    />
                   </div>
                 </div>
                 {/* total */}
@@ -79,10 +133,13 @@ export default function Page() {
               </div>
               <hr />
             </div>
-          ))}
+          ))
+        ) : (
+          <div className="w-full p-6 text-center">장바구니가 비었습니다.</div>
+        )}
       </div>
 
-      <div className="w-1/3">
+      <div className="w-full md:w-1/3">
         <h1 className="text-xl font-medium p-2">주문 합계</h1>
         <hr className="line-main" />
 

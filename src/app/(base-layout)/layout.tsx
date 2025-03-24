@@ -14,7 +14,6 @@ export default function RootLayout({
         </Link>
         <div className="flex gap-2">
           <Image src="/category.svg" width={22} height={22} alt="category" />
-          카테고리
         </div>
         <div className="grid grid-flow-col gap-4">
           <Link href="/mypage">

@@ -47,11 +47,9 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     <div>
       {/* title */}
       {category && (
-        <div className="flex gap-10 py-6 items-center">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-10 py-6 md:items-center">
           <h1 className="text-xl">{category?.name}</h1>
-          <p className="text-xs bg-light py-3 px-6 before:content-[''] before:absolute before:top-1/2 before:left-0 before:w-0 before:h-0 before:border-[20px] before:border-transparent before:border-r-[#00aabb] before:border-l-0 before:-mt-[20px] before:-ml-[20px]">
-            {category?.description}
-          </p>
+          <p className="text-xs bg-light py-3 px-6 ">{category?.description}</p>
         </div>
       )}
       {/* body */}
