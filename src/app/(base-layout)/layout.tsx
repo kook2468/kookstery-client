@@ -1,3 +1,4 @@
+import { AuthProvider } from "@/context/auth.context";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,7 +8,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <AuthProvider>
       <header className="w-full fixed h-16 grid grid-flow-col grid-cols-[180px_1fr_180px] items-center px-16 border-b bg-white z-10">
         <Link href="/" className="text-xl font-bold">
           Kookstery
@@ -51,6 +52,6 @@ export default function RootLayout({
           제작 @kook2468
         </footer>
       </div>
-    </>
+    </AuthProvider>
   );
 }

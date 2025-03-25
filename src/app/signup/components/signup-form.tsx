@@ -208,10 +208,10 @@ export default function SignUpForm({ onSuccess }: { onSuccess: () => void }) {
         </div>
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center my-16">
         <button
           type="submit"
-          className="btn-primary mt-16 text-base w-64 h-10"
+          className="btn-primary text-base w-64 h-10"
           disabled={isPending}
         >
           가입신청

@@ -1,3 +1,6 @@
+import { Response } from "@/types/response";
+import { User } from "@/types/user";
+
 export async function loginAction(_: unknown, formData: FormData) {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
@@ -50,6 +53,33 @@ export async function loginAction(_: unknown, formData: FormData) {
     return {
       status: false,
       error: `로그인 실패 - ${err}`,
+    };
+  }
+}
+
+export async function getCurrentUser(): Promise<Response<User>> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_SERVER_URL}/auth/currentUser`
+    );
+
+    const data = await response.json();
+
+    if (!data.success) {
+      return {
+        status: false,
+        message: data?.message,
+      };
+    }
+    return {
+      status: true,
+      data: data?.data,
+    };
+  } catch (err) {
+    console.log(`Authorization Feil - ${err}`);
+    return {
+      status: false,
+      message: `Authorization Fail - ${err}`,
     };
   }
 }
