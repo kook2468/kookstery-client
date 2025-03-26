@@ -100,16 +100,27 @@ export default function Page() {
                 <div className="h-full h-10 bg-gray-300"></div>
                 {/* detail */}
                 <div className="px-6">
-                  <p className="text-[#ddd] text-sm">
-                    <span>{cartItem?.product?.category?.name}</span>
+                  <p className="text-[#ddd] text-sm pb-1">
+                    <span
+                      className="cursor-pointer hover:underline"
+                      onClick={() => {
+                        router.push(
+                          `/category/${cartItem?.product?.category?.id}`
+                        );
+                      }}
+                    >
+                      {cartItem?.product?.category?.name}
+                    </span>
                   </p>
-                  <h3
-                    className="font-medium cursor-pointer hover:underline"
-                    onClick={() => {
-                      router.push(`/product/${cartItem?.product?.id}`);
-                    }}
-                  >
-                    {cartItem.product.name}
+                  <h3 className="font-medium pb-1 ">
+                    <span
+                      className="cursor-pointer hover:underline"
+                      onClick={() => {
+                        router.push(`/product/${cartItem?.product?.id}`);
+                      }}
+                    >
+                      {cartItem.product.name}
+                    </span>
                   </h3>
                   <p className="text-sm">{cartItem.product.finalPrice}원/개</p>
                   <div className="flex pt-4 gap-4">

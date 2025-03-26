@@ -48,7 +48,7 @@ export default function RootLayout({
       </header>
       <div className="flex flex-col min-h-screen w-full bg-white px-4 sm:px-10 md:px-20 lg:px-40 xl:px-60 pt-16 min-h-[calc(100svh-116px)]">
         <div className="flex-1">{children}</div>
-        <footer className="grid items-center h-16 justify-center">
+        <footer className="grid items-center h-16 justify-center mt-24">
           제작 @kook2468
         </footer>
       </div>

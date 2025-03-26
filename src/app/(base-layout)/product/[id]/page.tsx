@@ -5,12 +5,15 @@ import { getProduct } from "@/actions/products.action";
 import QuantityInput from "@/components/quantity-input";
 import { useToast } from "@/context/toast.context";
 import { Product } from "@/types/product";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const [product, setProduct] = useState<Product>();
   const [qty, setQty] = useState(1);
   const { showToast } = useToast();
+  const router = useRouter();
 
   const saveStorage = () => {
     /* 최근 본 상품 스토리지 */
@@ -79,40 +82,63 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   };
 
   return (
-    <div className="flex my-16">
-      <div className="flex-1 px-10">
-        <div className="h-80 rounded-lg bg-gray-300"></div>
+    <div>
+      <div className="flex items-center gap-2 text-gray-400 font-bold mt-10">
+        <div>
+          <Image
+            src="/home.svg"
+            width={22}
+            height={18}
+            alt="home"
+            onClick={() => router.push("/")}
+            className="cursor-pointer"
+          />
+        </div>
+        <div>{`>`}</div>
+        <div>
+          <span
+            className="cursor-pointer hover:underline"
+            onClick={() => router.push(`/category/${product?.category?.id}`)}
+          >
+            {product?.category?.name}
+          </span>
+        </div>
       </div>
-      <div className="flex-1">
-        <h1 className="text-xl">{product?.name}</h1>
-        <p className="py-4 text-sm">{product?.description}</p>
+      <div className="flex my-10 flex-col md:flex-row">
+        <div className="flex-1 md:px-10">
+          <div className="h-80 rounded-lg bg-gray-300"></div>
+        </div>
+        <div className="flex-1 mt-5">
+          <h1 className="text-xl font-semibold">{product?.name}</h1>
+          <p className="py-4 text-sm">{product?.description}</p>
 
-        {product && (
-          <div>
-            <div className="flex flex-col gap-4">
-              <div className="flex justify-between">
-                <h3>수량</h3>
-                <QuantityInput
-                  id={product.id}
-                  initQty={qty}
-                  onQtyChange={handleQtyChange}
-                ></QuantityInput>
+          {product && (
+            <div>
+              <div className="flex flex-col gap-4">
+                <div className="flex justify-between">
+                  <h3>수량</h3>
+                  <QuantityInput
+                    id={product.id}
+                    initQty={qty}
+                    onQtyChange={handleQtyChange}
+                  ></QuantityInput>
+                </div>
+                <div className="flex justify-between">
+                  <h3>상품금액 합계</h3>
+                  <p>{product.finalPrice * qty} 원</p>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <h3>상품금액 합계</h3>
-                <p>{product.finalPrice * qty} 원</p>
+              <div className="flex gap-3 pt-10">
+                <button className="btn-light w-40" onClick={handleCart}>
+                  장바구니
+                </button>
+                <button className="btn-light w-40" onClick={handleWishlist}>
+                  위시리스트
+                </button>
               </div>
             </div>
-            <div className="flex gap-3 pt-10">
-              <button className="btn-light w-40" onClick={handleCart}>
-                장바구니
-              </button>
-              <button className="btn-light w-40" onClick={handleWishlist}>
-                위시리스트
-              </button>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

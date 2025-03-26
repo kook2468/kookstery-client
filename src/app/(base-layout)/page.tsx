@@ -87,7 +87,7 @@ export default function Home() {
       <div>
         <h1 className="font-bold tracking-tight pb-4">최근 본 상품</h1>
         <div className="overflow-x-auto hide-scrollbar">
-          <div className="flex flex-col md:flex-row gap-4 text-center min-w-max">
+          <div className="flex flex-row gap-4 text-center min-w-max">
             {lastViewedProducts && lastViewedProducts.length > 0 ? (
               lastViewedProducts.map((product) => (
                 <div key={product.id} className="w-44 shrink-0">

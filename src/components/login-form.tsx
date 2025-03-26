@@ -1,6 +1,6 @@
 "use client";
 
-import { loginAction } from "@/actions/login.action";
+import { loginAction } from "@/actions/auth.action";
 import { useToast } from "@/context/toast.context";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

@@ -60,7 +60,12 @@ export async function loginAction(_: unknown, formData: FormData) {
 export async function getCurrentUser(): Promise<Response<User>> {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_SERVER_URL}/auth/currentUser`
+      `${process.env.NEXT_PUBLIC_APP_SERVER_URL}/auth/currentUser`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      }
     );
 
     const data = await response.json();
