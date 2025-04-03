@@ -72,3 +72,8 @@ input[type="checkbox"] {
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
 }
+
+.sub-line {
+  border-color: #aaa;
+  border-style: dashed;
+}

@@ -6,9 +6,11 @@ import {
   updateCartItemQuantity,
   updateCartItemSelected,
 } from "@/actions/cart-item.action";
+import CheckoutHeader from "@/components/checkout-header";
 import QuantityInput from "@/components/quantity-input";
 import { useToast } from "@/context/toast.context";
-import { CartItem } from "@/types/cartItem";
+import { CartItem } from "@/types/cart-item";
+` `;
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -79,128 +81,149 @@ export default function Page() {
   };
 
   return (
-    <div className="flex flex-col gap-20 pt-6 md:flex-row">
-      <div className="w-full md:w-2/3">
-        <h1 className="text-xl font-medium p-2">장바구니</h1>
-        <hr className="line-main" />
+    <div>
+      <CheckoutHeader step={1} />
+      <div className="flex flex-col gap-20 pt-6 md:flex-row">
+        <div className="w-full md:w-2/3">
+          <h1 className="text-lg p-2">쿡스테리 상품내역</h1>
+          <hr className="sub-line" />
 
-        {cartItems && cartItems.length > 0 ? (
-          cartItems.map((cartItem) => (
-            <div key={cartItem?.id}>
-              <div className="grid grid-flow-col grid-cols-[30px_1fr_2fr_100px] p-4 items-center min-h-48">
-                {/* checkbox */}
-                <div>
-                  <input
-                    type="checkbox"
-                    checked={cartItem?.isSelected}
-                    onChange={handleCheckboxChange(cartItem.id)}
-                  ></input>
-                </div>
-                {/* image */}
-                <div className="h-full h-10 bg-gray-300"></div>
-                {/* detail */}
-                <div className="px-6">
-                  <p className="text-[#ddd] text-sm pb-1">
-                    <span
-                      className="cursor-pointer hover:underline"
-                      onClick={() => {
-                        router.push(
-                          `/category/${cartItem?.product?.category?.id}`
-                        );
-                      }}
-                    >
-                      {cartItem?.product?.category?.name}
-                    </span>
-                  </p>
-                  <h3 className="font-medium pb-1 ">
-                    <span
-                      className="cursor-pointer hover:underline"
-                      onClick={() => {
-                        router.push(`/product/${cartItem?.product?.id}`);
-                      }}
-                    >
-                      {cartItem.product.name}
-                    </span>
-                  </h3>
-                  <p className="text-sm">{cartItem.product.finalPrice}원/개</p>
-                  <div className="flex pt-4 gap-4">
-                    <QuantityInput
-                      id={cartItem.id}
-                      initQty={cartItem.quantity}
-                      onQtyChange={handleQtyChange}
-                    ></QuantityInput>
-                    <Image
-                      src="/trash.svg"
-                      width={22}
-                      height={22}
-                      alt="delete"
-                      className="cursor-pointer"
-                      onClick={handleDeleteClick(cartItem.id)}
-                    />
+          {cartItems && cartItems.length > 0 ? (
+            cartItems.map((cartItem) => (
+              <div key={cartItem?.id}>
+                <div className="grid grid-flow-col grid-cols-[30px_1fr_2fr_100px] p-4 items-center min-h-48">
+                  {/* checkbox */}
+                  <div>
+                    <input
+                      type="checkbox"
+                      checked={cartItem?.isSelected}
+                      onChange={handleCheckboxChange(cartItem.id)}
+                    ></input>
+                  </div>
+                  {/* image */}
+                  <div className="h-full h-10 bg-gray-300"></div>
+                  {/* detail */}
+                  <div className="px-6">
+                    <p className="text-[#ddd] text-sm pb-1">
+                      <span
+                        className="cursor-pointer hover:underline"
+                        onClick={() => {
+                          router.push(
+                            `/category/${cartItem?.product?.category?.id}`
+                          );
+                        }}
+                      >
+                        {cartItem?.product?.category?.name}
+                      </span>
+                    </p>
+                    <h3 className="font-medium pb-1 ">
+                      <span
+                        className="cursor-pointer hover:underline"
+                        onClick={() => {
+                          router.push(`/product/${cartItem?.product?.id}`);
+                        }}
+                      >
+                        {cartItem.product.name}
+                      </span>
+                    </h3>
+                    <p className="text-sm">
+                      {cartItem.product.finalPrice.toLocaleString()}원/개
+                    </p>
+                    <div className="flex pt-4 gap-4">
+                      <QuantityInput
+                        id={cartItem.id}
+                        initQty={cartItem.quantity}
+                        onQtyChange={handleQtyChange}
+                      ></QuantityInput>
+                      <Image
+                        src="/trash.svg"
+                        width={22}
+                        height={22}
+                        alt="delete"
+                        className="cursor-pointer"
+                        onClick={handleDeleteClick(cartItem.id)}
+                      />
+                    </div>
+                  </div>
+                  {/* total */}
+                  <div className="text-right">
+                    {Number(cartItem.finalPrice).toLocaleString()}&nbsp;원
                   </div>
                 </div>
-                {/* total */}
-                <div className="text-right">{cartItem.finalPrice}&nbsp;원</div>
+                <hr />
               </div>
-              <hr />
+            ))
+          ) : (
+            <div className="w-full p-6 text-center">장바구니가 비었습니다.</div>
+          )}
+        </div>
+
+        <div className="w-full md:w-1/3">
+          <h1 className="text-lg p-2">금액 합계</h1>
+          <hr className="sub-line" />
+
+          <div className="py-2">
+            <div className="flex justify-between py-2">
+              <h3>총 상품 금액</h3>
+              <p>
+                {cartItems
+                  ?.reduce(
+                    (sum, cartItem) =>
+                      sum +
+                      (cartItem.isSelected ? Number(cartItem.regularPrice) : 0),
+                    0
+                  )
+                  .toLocaleString()}
+                &nbsp;원
+              </p>
             </div>
-          ))
-        ) : (
-          <div className="w-full p-6 text-center">장바구니가 비었습니다.</div>
-        )}
-      </div>
 
-      <div className="w-full md:w-1/3">
-        <h1 className="text-xl font-medium p-2">주문 합계</h1>
-        <hr className="line-main" />
-
-        <div className="py-2">
-          <div className="flex justify-between py-2">
-            <h3>총 상품 금액</h3>
-            <p>
-              {cartItems?.reduce(
-                (sum, cartItem) =>
-                  sum +
-                  (cartItem.isSelected ? Number(cartItem.regularPrice) : 0),
-                0
-              )}
-              &nbsp;원
-            </p>
+            <div className="flex justify-between py-2">
+              <h3>할인 금액</h3>
+              <p>
+                {cartItems
+                  ?.reduce(
+                    (sum, cartItem) =>
+                      sum +
+                      (cartItem.isSelected
+                        ? Number(cartItem.discountPrice)
+                        : 0),
+                    0
+                  )
+                  .toLocaleString()}
+                &nbsp;원
+              </p>
+            </div>
           </div>
 
-          <div className="flex justify-between py-2">
-            <h3>할인 금액</h3>
-            <p>
-              {cartItems?.reduce(
-                (sum, cartItem) =>
-                  sum +
-                  (cartItem.isSelected ? Number(cartItem.discountPrice) : 0),
-                0
-              )}
-              &nbsp;원
-            </p>
+          <hr className="line-main" />
+
+          <div className="py-2">
+            <div className="flex justify-between py-2">
+              <h3>합계</h3>
+              <p>
+                {" "}
+                {cartItems
+                  ?.reduce(
+                    (sum, cartItem) =>
+                      sum +
+                      (cartItem.isSelected ? Number(cartItem.finalPrice) : 0),
+                    0
+                  )
+                  .toLocaleString()}
+                &nbsp;원
+              </p>
+            </div>
           </div>
-        </div>
 
-        <hr className="line-main" />
-
-        <div className="py-2">
-          <div className="flex justify-between py-2">
-            <h3>합계</h3>
-            <p>
-              {" "}
-              {cartItems?.reduce(
-                (sum, cartItem) =>
-                  sum + (cartItem.isSelected ? Number(cartItem.finalPrice) : 0),
-                0
-              )}
-              &nbsp;원
-            </p>
+          <div className="pt-5">
+            <button
+              className="btn-light w-full !rounded-lg !py-3 text-xl"
+              onClick={() => router.push("/checkout")}
+            >
+              주문/결제
+            </button>
           </div>
-        </div>
-
-        <div className="pt-5">
-          <button className="btn-primary w-full !rounded-lg">주문 결제</button>
         </div>
       </div>
     </div>

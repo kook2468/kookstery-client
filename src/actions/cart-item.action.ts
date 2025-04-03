@@ -1,4 +1,4 @@
-import { CartItem } from "@/types/cartItem";
+import { CartItem } from "@/types/cart-item";
 import { Response } from "@/types/response";
 
 /* 전체 카트아이템 조회 */
