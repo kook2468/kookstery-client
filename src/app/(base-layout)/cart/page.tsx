@@ -216,14 +216,16 @@ export default function Page() {
             </div>
           </div>
 
-          <div className="pt-5">
-            <button
-              className="btn-light w-full !rounded-lg !py-3 text-xl"
-              onClick={() => router.push("/checkout")}
-            >
-              주문/결제
-            </button>
-          </div>
+          {cartItems && cartItems.length > 0 && (
+            <div className="pt-5">
+              <button
+                className="btn-light w-full !rounded-lg !py-3 text-xl"
+                onClick={() => router.push("/checkout")}
+              >
+                주문/결제
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -87,7 +87,7 @@ export default function CheckoutShippingForm() {
       {shippingInfos && (
         <div className="mt-6">
           <FormInput
-            name="shippingRequest"
+            name="deliveryNote"
             label="배송 요청사항"
             placeholder="배송 요청사항을 입력해주세요."
             onChange={(e) => setDeliveryNote(e.target.value)}
@@ -119,9 +119,8 @@ const ShippingRow = ({
   onSelectShipping,
 }: ShippingRowProps) => {
   const handleCurrentShippingChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+    _: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const checked = e.target.checked;
     onSelectShipping(id); // 부모의 현재 배송지 변경 이벤트 호출
   };
   return (

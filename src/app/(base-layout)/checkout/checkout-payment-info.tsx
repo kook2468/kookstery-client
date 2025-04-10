@@ -79,8 +79,8 @@ export default function CheckoutPaymentInfo() {
 
       <div className="pt-5">
         <button
+          type="submit"
           className="btn-light w-full !rounded-lg !py-3 text-xl"
-          onClick={() => router.push("/order-confirm")}
         >
           주문 확정
         </button>
