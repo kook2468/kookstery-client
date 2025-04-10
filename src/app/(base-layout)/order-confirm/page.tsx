@@ -1,11 +1,12 @@
 export const dynamic = "force-dynamic";
 
-interface OrderConfirmPageProps {
-  searchParams: { status?: string };
-}
-export default function page({ searchParams }: OrderConfirmPageProps) {
+export default async function page({
+  searchParams,
+}: {
+  searchParams: Promise<{ status?: string }>;
+}) {
   console.log("searchParams", searchParams);
-  const { status } = searchParams;
+  const { status } = await searchParams;
   console.log("status", status);
 
   const isSuccess = status === "success";
