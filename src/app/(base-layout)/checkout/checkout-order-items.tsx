@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CheckoutSection from "./checkout-section";
 import { CartItem } from "@/types/cart-item";
 import { getAllCartItems } from "@/actions/cart-item.action";
+import Image from "next/image";
 
 export default function CheckoutOrderItems() {
   const [cartItems, setCartItems] = useState<CartItem[]>();
@@ -46,12 +47,23 @@ export default function CheckoutOrderItems() {
                     className={index < cartItems.length - 1 ? "border-b" : ""}
                   >
                     <td className="w-20">
-                      <div className="w-20 h-20 bg-gray-300"></div>
+                      {cartItem.product ? (
+                        <Image
+                          src={`/product/${
+                            cartItem.product.id <= 5
+                              ? cartItem.product.id
+                              : "default"
+                          }.png`}
+                          alt={cartItem.product.slug}
+                          width={300}
+                          height={300}
+                          className="rounded-lg"
+                        />
+                      ) : (
+                        <div className="w-20 h-20 bg-gray-300"></div>
+                      )}
                     </td>
-                    <td
-                      className="text-left
-                  "
-                    >
+                    <td className="text-left pl-4">
                       <div className="text-gray-500 text-xs">
                         {cartItem.product.category.name}
                       </div>

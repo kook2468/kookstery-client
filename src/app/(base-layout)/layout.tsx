@@ -14,12 +14,17 @@ export default function RootLayout({
           Kookstery
         </Link>
         <div className="flex gap-2">
-          <Image src="/category.svg" width={22} height={22} alt="category" />
+          <Image
+            src="/icon/category.svg"
+            width={22}
+            height={22}
+            alt="category"
+          />
         </div>
         <div className="grid grid-flow-col gap-4">
           <Link href="/mypage">
             <Image
-              src="/mypage.svg"
+              src="/icon/mypage.svg"
               width={20}
               height={20}
               alt="mypage"
@@ -28,7 +33,7 @@ export default function RootLayout({
           </Link>
           <Link href="/cart">
             <Image
-              src="/cart.svg"
+              src="/icon/cart.svg"
               width={20}
               height={20}
               alt="cart"
@@ -37,7 +42,7 @@ export default function RootLayout({
           </Link>
           <div>
             <Image
-              src="/search.svg"
+              src="/icon/search.svg"
               width={20}
               height={20}
               alt="search"

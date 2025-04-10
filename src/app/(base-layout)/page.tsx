@@ -69,7 +69,7 @@ export default function Home() {
                 href={"/category/" + category.id}
               >
                 <Image
-                  src="/emoji-magic-wand.svg"
+                  src="/icon/emoji-magic-wand.svg"
                   width={30}
                   height={30}
                   alt={category.slug}
@@ -91,7 +91,16 @@ export default function Home() {
             {lastViewedProducts && lastViewedProducts.length > 0 ? (
               lastViewedProducts.map((product) => (
                 <div key={product.id} className="w-44 shrink-0">
-                  <div className="bg-[#ECF2F7] rounded-3xl py-10 px-4 min-h-40"></div>
+                  <Image
+                    src={`/product/${
+                      product.id <= 5 ? product.id : "default"
+                    }.png`}
+                    alt={product.slug}
+                    width={300}
+                    height={300}
+                    className="rounded-lg"
+                  />
+                  {/* <div className="bg-[#ECF2F7] rounded-3xl py-10 px-4 min-h-40"></div> */}
                   <h3 className="mt-2">{product.name}</h3>
                 </div>
               ))

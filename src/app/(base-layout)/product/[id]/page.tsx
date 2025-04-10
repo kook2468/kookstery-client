@@ -86,7 +86,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
       <div className="flex items-center gap-2 text-gray-400 font-bold mt-10">
         <div>
           <Image
-            src="/home.svg"
+            src="/icon/home.svg"
             width={22}
             height={18}
             alt="home"
@@ -106,7 +106,17 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
       </div>
       <div className="flex my-10 flex-col md:flex-row">
         <div className="flex-1 md:px-10">
-          <div className="h-80 rounded-lg bg-gray-300"></div>
+          {product ? (
+            <Image
+              src={`/product/${product.id <= 5 ? product.id : "default"}.png`}
+              alt={product.slug}
+              width={400}
+              height={400}
+              className="rounded-lg"
+            />
+          ) : (
+            <div className="h-80 rounded-lg bg-gray-300"></div>
+          )}
         </div>
         <div className="flex-1 mt-5">
           <h1 className="text-xl font-semibold">{product?.name}</h1>

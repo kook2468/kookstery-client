@@ -150,7 +150,7 @@ const ShippingRow = ({
       </div>
       <div>
         <Image
-          src="/pencil.svg"
+          src="/icon/pencil.svg"
           alt="수정"
           width={20}
           height={20}
@@ -158,7 +158,7 @@ const ShippingRow = ({
         />
         {!isDefault && (
           <Image
-            src="/delete.svg"
+            src="/icon/delete.svg"
             alt="수정"
             width={20}
             height={20}

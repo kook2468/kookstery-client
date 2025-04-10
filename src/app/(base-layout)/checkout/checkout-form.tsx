@@ -6,25 +6,25 @@ import CheckoutOrdererInfo from "./checkout-orderer-info";
 import CheckoutPaymentInfo from "./checkout-payment-info";
 import CheckoutShippingForm from "./checkout-shipping-form";
 import { confirmOrder } from "@/actions/order.action";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function CheckoutForm() {
+  const router = useRouter();
   /* 주문 확정 버튼 클릭 */
   const handleConfirmOrder = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const deliveryNotes = formData.get("deliveryNote") as string | null; //배송 요청사항
-    //fetchConfirmOrder(deliveryNotes);
-    redirect("/order-confirm?status=success");
+    fetchConfirmOrder(deliveryNotes);
   };
 
   const fetchConfirmOrder = async (deliveryNotes: string | null) => {
     try {
       await confirmOrder(deliveryNotes);
-      redirect("/order-confirm?status=success");
+      router.push("/order-confirm?status=success");
     } catch (error) {
       console.error("주문확정에러", error);
-      redirect("/order-confirm?status=fail");
+      router.push("/order-confirm?status=fail");
     }
   };
 

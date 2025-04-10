@@ -110,21 +110,28 @@ export default function ProductList({ categoryId }: ProductListProps) {
               ref={index === products.length - 1 ? lastProductRef : null}
             >
               <div className="relative">
-                {product.imageUrn ? (
-                  <Image
-                    src="/cart.svg"
-                    alt={product.imageUrn}
-                    width={50}
-                    height={50}
-                    className="rounded-lg"
-                  />
-                ) : (
-                  <Link href={`/product/${product.id}`}>
+                <Link href={`/product/${product.id}`}>
+                  {product.id ? (
+                    <Image
+                      src={`/product/${
+                        product.id <= 5 ? product.id : "default"
+                      }.png`}
+                      alt={product.slug}
+                      width={300}
+                      height={300}
+                      className="rounded-lg"
+                    />
+                  ) : (
                     <div className="w-full h-60 bg-gray-300 rounded-lg"></div>
-                  </Link>
-                )}
+                  )}
+                </Link>
                 <div className="absolute right-3 bottom-3">
-                  <Image src="/heart.svg" alt="wish" width={20} height={20} />
+                  <Image
+                    src="/icon/heart.svg"
+                    alt="wish"
+                    width={20}
+                    height={20}
+                  />
                 </div>
               </div>
 

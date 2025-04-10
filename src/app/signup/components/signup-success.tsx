@@ -8,7 +8,7 @@ export default function SignUpSuccess() {
     <section className="w-full flex items-center justify-center text-center mt-44">
       <div>
         <Image
-          src="/success-icon.svg"
+          src="/icon/success-icon.svg"
           alt="success"
           width={40}
           height={40}

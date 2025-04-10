@@ -101,10 +101,24 @@ export default function Page() {
                     ></input>
                   </div>
                   {/* image */}
-                  <div className="h-full h-10 bg-gray-300"></div>
+                  {cartItem.product ? (
+                    <Image
+                      src={`/product/${
+                        cartItem.product.id <= 5
+                          ? cartItem.product.id
+                          : "default"
+                      }.png`}
+                      alt={cartItem.product.slug}
+                      width={300}
+                      height={300}
+                      className="rounded-lg"
+                    />
+                  ) : (
+                    <div className="h-full h-10 bg-gray-300"></div>
+                  )}
                   {/* detail */}
                   <div className="px-6">
-                    <p className="text-[#ddd] text-sm pb-1">
+                    <p className="text-[#999] text-sm pb-1">
                       <span
                         className="cursor-pointer hover:underline"
                         onClick={() => {
@@ -136,7 +150,7 @@ export default function Page() {
                         onQtyChange={handleQtyChange}
                       ></QuantityInput>
                       <Image
-                        src="/trash.svg"
+                        src="/icon/trash.svg"
                         width={22}
                         height={22}
                         alt="delete"
