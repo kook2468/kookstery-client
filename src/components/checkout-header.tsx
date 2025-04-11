@@ -26,7 +26,6 @@ export default function CheckoutHeader({ step }: CheckoutProps) {
         <ul className="flex gap-4">
           {Object.values(CheckoutStep).map((key) => {
             const id = Number(key) as CheckoutStep;
-            console.log("length?", Object.values(CheckoutStep).length);
             if (!id) return null;
             return (
               <li

@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="relative">
               <div className="absolute -left-48 -top-16">
                 <Image
-                  src="/wizard-icon.png"
+                  src="/icon/wizard-icon.png"
                   width={140}
                   height={140}
                   alt="wizard"

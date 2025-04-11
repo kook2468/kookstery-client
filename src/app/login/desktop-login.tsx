@@ -10,7 +10,7 @@ export default function DesktopLogin() {
           <div className="flex-1 flex justify-end items-center p-32">
             <div className="max-w-lg w-full text-center">
               <Image
-                src="/wizard-icon.png"
+                src="/icon/wizard-icon.png"
                 alt="Wizard"
                 width={180}
                 height={180}
@@ -19,7 +19,7 @@ export default function DesktopLogin() {
 
               <div className="mt-48 text-sm">
                 <Image
-                  src="/github-icon.png"
+                  src="/icon/github-icon.png"
                   alt="Github"
                   width={48}
                   height={48}

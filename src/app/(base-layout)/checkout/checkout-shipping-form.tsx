@@ -50,8 +50,9 @@ export default function CheckoutShippingForm() {
   const fetchShippingInfos = async () => {
     try {
       const response = await getAllShippingAddress();
+      console.log("shipping Reponse???", response?.data?.addresses);
       if (response?.status) {
-        setShippingInfos(response?.data);
+        setShippingInfos(response?.data?.addresses);
       }
     } catch (error) {
       console.error("전체 배송지 조회 실패 - ", error);

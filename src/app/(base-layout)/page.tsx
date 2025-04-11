@@ -53,7 +53,12 @@ export default function Home() {
           </div>
         </div>
         <div className="transform scale-x-[-1]">
-          <Image src="/wizard-icon.png" width={180} height={180} alt="wizard" />
+          <Image
+            src="/icon/wizard-icon.png"
+            width={180}
+            height={180}
+            alt="wizard"
+          />
         </div>
       </div>
 

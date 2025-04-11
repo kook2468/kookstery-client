@@ -113,11 +113,11 @@ export default function LoginForm() {
         <div className="mt-4 text-center">
           <div className="mt-4 flex justify-center space-x-4">
             <button className="border border-2 border-[#AAA] border-opacity-20 px-6 py-3 rounded-3xl flex items-center space-x-2 text-sm">
-              <img src="/google-icon.png" alt="Google" className="w-6" />
+              <img src="/icon/google-icon.png" alt="Google" className="w-6" />
               <span>Google 간편 로그인</span>
             </button>
             <button className="border border-2 border-[#AAA] border-opacity-20 px-6 py-2 rounded-3xl flex items-center space-x-2 text-sm">
-              <img src="/kakao-icon.webp" alt="Kakao" className="w-6" />
+              <img src="/icon/kakao-icon.webp" alt="Kakao" className="w-6" />
               <span>카카오톡 간편 로그인</span>
             </button>
           </div>

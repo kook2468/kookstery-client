@@ -63,7 +63,7 @@ export default function CheckoutOrderItems() {
                         <div className="w-20 h-20 bg-gray-300"></div>
                       )}
                     </td>
-                    <td className="text-left pl-4">
+                    <td className="text-left pl-3">
                       <div className="text-gray-500 text-xs">
                         {cartItem.product.category.name}
                       </div>
