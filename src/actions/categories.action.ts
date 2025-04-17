@@ -10,6 +10,7 @@ export async function getAllCategories(): Promise<Response<Category[]>> {
   });
 }
 
+/* 카테고리 정보 조회 */
 export async function getCategoryById(
   categoryId: string
 ): Promise<Response<Category>> {

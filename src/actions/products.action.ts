@@ -2,6 +2,7 @@ import { Product } from "@/types/product";
 import { Response } from "@/types/response";
 import { fetcher } from "@/utils/fetcher";
 
+/* 상품 조회 */
 export async function getProduct(
   productId: string
 ): Promise<Response<Product>> {

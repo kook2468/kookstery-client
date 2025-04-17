@@ -16,10 +16,12 @@ export async function createCartItem(
   });
 }
 
+/* 현재 활성화 카트 조회 */
 export async function getCurrentCart(): Promise<Response<Cart>> {
   return fetcher<Cart>({ urn: "/cart", hasOption: true, method: "GET" });
 }
 
+/* 현재 카트 배송지 업데이트 */
 export async function updateCurrentCartShipping(
   shippingAddressId: number
 ): Promise<Response<Cart>> {

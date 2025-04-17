@@ -2,6 +2,7 @@ import { Response } from "@/types/response";
 import { User } from "@/types/user";
 import { fetcher } from "@/utils/fetcher";
 
+/* 로그인 */
 export async function loginAction(_: unknown, formData: FormData) {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
@@ -23,6 +24,7 @@ export async function loginAction(_: unknown, formData: FormData) {
   });
 }
 
+/* 현재 로그인 유저 조회 */
 export async function getCurrentUser(): Promise<Response<User>> {
   return fetcher<User>({
     urn: "/auth/currentUser",

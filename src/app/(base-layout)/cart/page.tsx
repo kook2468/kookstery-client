@@ -233,7 +233,7 @@ export default function Page() {
           {cartItems && cartItems.length > 0 && (
             <div className="pt-5">
               <button
-                className="btn-light w-full !rounded-lg !py-3 text-xl"
+                className="btn btn-primary w-full !rounded-lg !py-3 text-xl"
                 onClick={() => router.push("/checkout")}
               >
                 주문/결제

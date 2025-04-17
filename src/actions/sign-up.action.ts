@@ -1,5 +1,6 @@
 import { fetcher } from "@/utils/fetcher";
 
+/* 회원가입 */
 export async function signUpAction(_: unknown, formData: FormData) {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();

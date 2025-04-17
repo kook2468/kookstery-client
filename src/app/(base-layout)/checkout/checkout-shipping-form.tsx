@@ -9,6 +9,7 @@ import {
   getCurrentCart,
   updateCurrentCartShipping,
 } from "@/actions/cart.action";
+import Modal from "@/components/modal";
 
 export default function CheckoutShippingForm() {
   const [shippingInfos, setShippingInfos] = useState<ShippingAddress[]>();
@@ -16,6 +17,17 @@ export default function CheckoutShippingForm() {
     number | undefined
   >();
   const [deliveryNote, setDeliveryNote] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    console.log("openModal click!");
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    console.log("closeModal click!");
+    setIsOpen(false);
+  };
 
   /* 현재 배송지 변경 이벤트 */
   const handleSelectShipping = (id: number) => {
@@ -78,6 +90,7 @@ export default function CheckoutShippingForm() {
                   : shippingInfo.isDefault
               }
               onSelectShipping={handleSelectShipping}
+              openModal={openModal}
             />
             {index < shippingInfos.length - 1 && (
               <hr className="my-4 w-11/12 mx-auto" />
@@ -96,6 +109,16 @@ export default function CheckoutShippingForm() {
           />
         </div>
       )}
+
+      <Modal
+        isOpen={isOpen}
+        title="배송지 수정"
+        confirmText="수정"
+        cancelText="취소"
+        onCancel={closeModal}
+      >
+        <div>배송지 수정~~</div>
+      </Modal>
     </CheckoutSection>
   );
 }
@@ -103,6 +126,7 @@ export default function CheckoutShippingForm() {
 interface ShippingRowProps extends ShippingAddress {
   currentShippingInfo: boolean | undefined;
   onSelectShipping: (id: number) => void;
+  openModal: () => void;
 }
 
 const ShippingRow = ({
@@ -118,6 +142,7 @@ const ShippingRow = ({
   receiverPhone,
   currentShippingInfo,
   onSelectShipping,
+  openModal,
 }: ShippingRowProps) => {
   const handleCurrentShippingChange = (
     _: React.ChangeEvent<HTMLInputElement>
@@ -156,6 +181,7 @@ const ShippingRow = ({
           width={20}
           height={20}
           className="mb-4 cursor-pointer"
+          onClick={openModal}
         />
         {!isDefault && (
           <Image
