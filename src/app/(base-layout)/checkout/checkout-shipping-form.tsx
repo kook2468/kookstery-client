@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CheckoutSection from "./checkout-section";
 import { ShippingAddress } from "@/types/shipping-address";
 import { getAllShippingAddress } from "@/actions/shipping-address.action";
@@ -10,6 +10,9 @@ import {
   updateCurrentCartShipping,
 } from "@/actions/cart.action";
 import Modal from "@/components/modal";
+import ShippingEditForm, {
+  ShippingEditFormHandle,
+} from "@/components/shipping-edit-form";
 
 export default function CheckoutShippingForm() {
   const [shippingInfos, setShippingInfos] = useState<ShippingAddress[]>();
@@ -17,16 +20,43 @@ export default function CheckoutShippingForm() {
     number | undefined
   >();
   const [deliveryNote, setDeliveryNote] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [editingShippingInfo, setEditingShippingInfo] = useState<
+    ShippingAddress | undefined
+  >();
+  const formRef = useRef<ShippingEditFormHandle>(null);
 
-  const openModal = () => {
-    console.log("openModal click!");
-    setIsOpen(true);
+  /* 배송지 업데이트 모달 */
+  const openUpdateModal = (shippingInfo: ShippingAddress) => {
+    console.log("openUpdateModal click!");
+    setEditingShippingInfo(shippingInfo);
+    setIsUpdateModalOpen(true);
+  };
+
+  /* 배송지 삭제 모달 */
+  const openDeleteModal = (id: number) => {
+    console.log("openDeleteModal click!");
+    setIsDeleteModalOpen(true);
   };
 
   const closeModal = () => {
     console.log("closeModal click!");
-    setIsOpen(false);
+    setIsUpdateModalOpen(false);
+    setIsDeleteModalOpen(false);
+  };
+
+  /* 배송지 수정 */
+  const handleSave = () => {
+    const formData = formRef.current?.getValue();
+
+    console.log(formData);
+    if (formData) {
+      //배송지 업데이트
+      //fetch
+    } else {
+      console.warn("formRef is null");
+    }
   };
 
   /* 현재 배송지 변경 이벤트 */
@@ -83,14 +113,15 @@ export default function CheckoutShippingForm() {
         shippingInfos.map((shippingInfo, index) => (
           <div key={shippingInfo.id}>
             <ShippingRow
-              {...shippingInfo}
+              shippingInfo={shippingInfo}
               currentShippingInfo={
                 currentShippingId
                   ? shippingInfo.id === currentShippingId
                   : shippingInfo.isDefault
               }
-              onSelectShipping={handleSelectShipping}
-              openModal={openModal}
+              onSelect={handleSelectShipping}
+              openUpdateModal={openUpdateModal}
+              openDeleteModal={openDeleteModal}
             />
             {index < shippingInfos.length - 1 && (
               <hr className="my-4 w-11/12 mx-auto" />
@@ -110,45 +141,69 @@ export default function CheckoutShippingForm() {
         </div>
       )}
 
+      {/* 배송지 업데이트 모달 */}
       <Modal
-        isOpen={isOpen}
+        isOpen={isUpdateModalOpen}
         title="배송지 수정"
         confirmText="수정"
         cancelText="취소"
         onCancel={closeModal}
+        onConfirm={handleSave}
       >
-        <div>배송지 수정~~</div>
+        {editingShippingInfo && (
+          <ShippingEditForm ref={formRef} defaultValue={editingShippingInfo} />
+        )}
+      </Modal>
+
+      {/* 배송지 삭제 모달 */}
+      <Modal
+        isOpen={isDeleteModalOpen}
+        title="배송지 삭제"
+        confirmText="삭제"
+        cancelText="취소  "
+        onCancel={closeModal}
+        onConfirm={closeModal}
+      >
+        배송지를 삭제하시겠습니까?
       </Modal>
     </CheckoutSection>
   );
 }
 
-interface ShippingRowProps extends ShippingAddress {
+interface ShippingRowProps {
+  shippingInfo: ShippingAddress;
   currentShippingInfo: boolean | undefined;
-  onSelectShipping: (id: number) => void;
-  openModal: () => void;
+  onSelect: (id: number) => void;
+  openUpdateModal: (shippingInfo: ShippingAddress) => void;
+  openDeleteModal: (id: number) => void;
 }
 
 const ShippingRow = ({
-  id,
-  isDefault,
-  name,
-  city,
-  state,
-  addressStreet,
-  addressDetail,
-  postalCode,
-  receiverName,
-  receiverPhone,
+  shippingInfo,
   currentShippingInfo,
-  onSelectShipping,
-  openModal,
+  onSelect,
+  openUpdateModal,
+  openDeleteModal,
 }: ShippingRowProps) => {
+  const {
+    id,
+    isDefault,
+    name,
+    city,
+    state,
+    addressStreet,
+    addressDetail,
+    postalCode,
+    receiverName,
+    receiverPhone,
+  } = shippingInfo;
+
   const handleCurrentShippingChange = (
     _: React.ChangeEvent<HTMLInputElement>
   ) => {
-    onSelectShipping(id); // 부모의 현재 배송지 변경 이벤트 호출
+    onSelect(id); // 부모의 현재 배송지 변경 이벤트 호출
   };
+
   return (
     <div className="grid grid-cols-[30px_1fr_50px] mb-3">
       <div>
@@ -181,15 +236,16 @@ const ShippingRow = ({
           width={20}
           height={20}
           className="mb-4 cursor-pointer"
-          onClick={openModal}
+          onClick={() => openUpdateModal(shippingInfo)}
         />
         {!isDefault && (
           <Image
             src="/icon/delete.svg"
-            alt="수정"
+            alt="삭제"
             width={20}
             height={20}
             className="cursor-pointer"
+            onClick={() => openDeleteModal(id)}
           />
         )}
       </div>

@@ -2,20 +2,20 @@ type CommonModalProps = {
   isOpen?: boolean;
   title: string;
   children: React.ReactNode;
-  onCancel?: () => void;
-  onConfirm?: () => void;
   confirmText?: string;
   cancelText?: string;
+  onCancel?: () => void;
+  onConfirm?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export default function Modal({
   isOpen = false,
   title,
   children,
-  onCancel,
-  onConfirm,
   confirmText,
   cancelText,
+  onCancel,
+  onConfirm,
 }: CommonModalProps) {
   if (!isOpen) return null;
 
@@ -26,16 +26,16 @@ export default function Modal({
 
         <div className="mb-6">{children}</div>
 
-        <div className="flex justify-end gap-2">
+        <div className="flex gap-2">
           <button
             onClick={onCancel}
-            className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+            className="flex-1 px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
           >
             {cancelText}
           </button>
           <button
             onClick={onConfirm}
-            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
+            className="flex-1 btn-primary !px-4 py-2 !rounded text-white"
           >
             {confirmText}
           </button>
