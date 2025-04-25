@@ -4,6 +4,7 @@ import CheckoutSection from "./checkout-section";
 import { CartItem } from "@/types/cart-item";
 import { getAllCartItems } from "@/actions/cart-item.action";
 import Image from "next/image";
+import ShippingListSkeleton from "@/components/skeleton/shipping-list-skeleton";
 
 export default function CheckoutOrderItems() {
   const [cartItems, setCartItems] = useState<CartItem[]>();
@@ -25,20 +26,20 @@ export default function CheckoutOrderItems() {
 
   return (
     <CheckoutSection title="쿡스테리 상품정보">
-      {cartItems && (
-        <table className="w-full text-sm text-center">
-          <thead>
-            <tr>
-              <td className="w-1/2" colSpan={2}>
-                상품정보
-              </td>
-              <td className="w-1/6">판매가</td>
-              <td className="w-1/6">수량</td>
-              <td className="w-1/6">구매가</td>
-            </tr>
-          </thead>
-          <tbody>
-            {cartItems
+      <table className="w-full text-sm text-center">
+        <thead>
+          <tr>
+            <td className="w-1/2" colSpan={2}>
+              상품정보
+            </td>
+            <td className="w-1/6">판매가</td>
+            <td className="w-1/6">수량</td>
+            <td className="w-1/6">구매가</td>
+          </tr>
+        </thead>
+        <tbody>
+          {cartItems ? (
+            cartItems
               ?.filter((cartItem) => cartItem.isSelected)
               .map((cartItem, index) => {
                 return (
@@ -75,7 +76,8 @@ export default function CheckoutOrderItems() {
                     <td>{cartItem.quantity}</td>
                     <td>
                       <div className="line-through text-xs text-gray-400">
-                        {Number(cartItem.regularPrice).toLocaleString()}&nbsp;원
+                        {Number(cartItem.regularPrice).toLocaleString()}
+                        &nbsp;원
                       </div>
                       <div>
                         {Number(cartItem.finalPrice).toLocaleString()}&nbsp;원
@@ -83,10 +85,16 @@ export default function CheckoutOrderItems() {
                     </td>
                   </tr>
                 );
-              })}
-          </tbody>
-        </table>
-      )}
+              })
+          ) : (
+            <tr>
+              <td colSpan={5}>
+                <ShippingListSkeleton count={1} />
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </CheckoutSection>
   );
 }

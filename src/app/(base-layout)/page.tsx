@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Category } from "@/types/category";
 import Link from "next/link";
 import { Product } from "@/types/product";
+import ShippingListSkeleton from "@/components/skeleton/shipping-list-skeleton";
 
 export default function Home() {
   /* 카테고리 조회 */
@@ -66,7 +67,8 @@ export default function Home() {
       <div className="my-14">
         <h1 className="font-bold tracking-tight pb-4">카테고리를 선택하세요</h1>
         <div className="flex flex-col md:flex-row justify-between gap-3 text-center">
-          {categories &&
+          {categories && categories.length > 0 ? (
+            categories &&
             categories.map((category) => (
               <Link
                 key={category.id}
@@ -84,7 +86,10 @@ export default function Home() {
                   {category.name}
                 </div>
               </Link>
-            ))}
+            ))
+          ) : (
+            <ShippingListSkeleton count={5} />
+          )}
         </div>
       </div>
 

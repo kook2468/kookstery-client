@@ -1,5 +1,6 @@
 "use client";
 
+import ShippingListSkeleton from "@/components/skeleton/shipping-list-skeleton";
 import { Product } from "@/types/product";
 import Image from "next/image";
 import Link from "next/link";
@@ -103,7 +104,8 @@ export default function ProductList({ categoryId }: ProductListProps) {
         총<span className="font-bold pl-1">{products?.length || 0}</span>개
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 my-10">
-        {products &&
+        {products && products.length > 0 ? (
+          products &&
           products.map((product, index) => (
             <div
               key={product.identifier}
@@ -145,7 +147,10 @@ export default function ProductList({ categoryId }: ProductListProps) {
               </div>
               <p className="text-xs">{product.description}</p>
             </div>
-          ))}
+          ))
+        ) : (
+          <ShippingListSkeleton count={6} />
+        )}
       </div>
     </div>
   );
